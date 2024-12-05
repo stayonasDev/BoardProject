@@ -25,7 +25,7 @@ public class Post {
     @JoinColumn(name="author_id", nullable = false)
     private User author;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     private int viewCount;
 

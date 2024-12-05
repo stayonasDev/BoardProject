@@ -1,10 +1,12 @@
 package lab.board.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -19,7 +21,7 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    private LocalDate birthday;
+    private LocalDateTime birthday;
 
     private String nickname;
 
@@ -31,5 +33,10 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role; // USER / ADMIN
+    private Role role = Role.USER; // USER / ADMIN
+
+    //ALTER 추가 후 도메인 미 설정으로 엑세스 거부 됨 403 Forbidden
+    @Column(nullable = false, unique = true)
+    @Email
+    String email;
 }

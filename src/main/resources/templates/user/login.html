@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div th:if="${param.error}">오류</div>
+    <form th:action th:object="${loginDto}" method="post">
+        <div>
+            <label for="username" th:text="ID">ID 입력</label>
+            <input type="text" id="username"th:field="*{username}">
+        </div>
+
+        <div>
+            <label for="password" th:text="Password">Password 입력</label>
+            <input type="password" id="password" th:field="*{password}">
+        </div>
+
+        <div>
+            <button type="submit" th:text="로그인"></button>
+        </div>
+    </form>
+
+    <div>
+        <a th:href="@{/user/join}" th:text="회원가입"></a>
+    </div>
+
+
+</div>
+</body>
+</html>
