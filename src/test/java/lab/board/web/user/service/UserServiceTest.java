@@ -3,6 +3,7 @@ package lab.board.web.user.service;
 import lab.board.domain.Role;
 import lab.board.domain.User;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.After;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +31,7 @@ class UserServiceTest {
         this.service = service;
     }
 
-    @BeforeEach
+    @AfterEach
     public void delete(){
         service.deleteAll();
     }
@@ -41,7 +42,7 @@ class UserServiceTest {
         User user = new User();
         user.setUsername("a");
         user.setPassword("a");
-        user.setBirthday(LocalDateTime.now());
+        user.setBirthday(LocalDate.now());
         user.setNickname("a");
         user.setPassword("a");
         user.setName("a");

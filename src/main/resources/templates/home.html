@@ -6,11 +6,19 @@
 </head>
 <body>
 <!--메인 페이지 게시판들이 보이고 로그인 버튼 있음-->
+<div th:if="${posts.size() == 0}">
+    <div th:text="'게시물X'"></div>
+</div>
 
 <div class="container">
-    <div th:object="">
-
+    <div th:each="post : ${posts}">
+        <div th:text="${post.title}">제목</div>
+        <div th:text="${post.content}">내용</div>
+<!--        <div><span th:text="${post.user.username}">작성자</span></div>-->
+        <div><span th:text="${#temporals.format(post.createdAt,  'yyyy-MM-dd')}">작성일</span></div>
     </div>
 </div>
+
+<div><a th:href="@{post/register}" th:text="'게시물 등록'"></a></div>
 </body>
 </html>

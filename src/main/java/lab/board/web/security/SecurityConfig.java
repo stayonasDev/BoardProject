@@ -22,15 +22,17 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeRequest) ->
                                 authorizeRequest
                                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                                        .requestMatchers("/", "/user/**", "/user/login/**", "/user/join", "/login", "/join").permitAll()
-//                                .requestMatchers("유저 인가").hasRole(Role.USER.name())
-//                                .requestMatchers("관리자 인가").hasRole(Role.ADMIN.name()))
+                                        .requestMatchers("/", "/user/**", "/user/login/**", "/user/join", "/post/**").permitAll()
+                                .requestMatchers("유저 인가").hasRole(Role.USER.name())
+                                .requestMatchers("관리자 인가").hasRole(Role.ADMIN.name())
                                         .anyRequest().authenticated() //나머지 페이지 인증된 사용자만 접근
                 );
 //                .formLogin(form -> form
 //                        .loginPage("/user/login")
 //                        .defaultSuccessUrl("/", true)
 //                        .failureUrl("/user/login?error=true")
+//                        .usernameParameter("username")
+//                        .passwordParameter("password")
 //                        .permitAll()
 //                )
 //                .logout(logout -> logout

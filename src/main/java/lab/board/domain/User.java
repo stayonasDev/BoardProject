@@ -3,6 +3,7 @@ package lab.board.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "User")
 public class User {
 
@@ -21,7 +23,7 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    private LocalDateTime birthday;
+    private LocalDate birthday;
 
     private String nickname;
 
@@ -39,4 +41,13 @@ public class User {
     @Column(nullable = false, unique = true)
     @Email
     String email;
+
+    public User(String name, LocalDate birthday, String nickname, String username, String password, String email) {
+        this.name = name;
+        this.birthday = birthday;
+        this.nickname = nickname;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 }

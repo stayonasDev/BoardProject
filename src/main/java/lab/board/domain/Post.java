@@ -1,7 +1,9 @@
 package lab.board.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "Post")
+@NoArgsConstructor
 public class Post {
 
     @Id
@@ -29,4 +32,11 @@ public class Post {
 
     private int viewCount;
 
+    public Post(String title, String content, User author) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.createdAt = LocalDateTime.now();
+        this.viewCount = 0;
+    }
 }

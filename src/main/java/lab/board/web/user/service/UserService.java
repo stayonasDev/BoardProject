@@ -34,5 +34,5 @@ public class UserService{
     public List<User> findAll(){
         return repository.findAll();
     }
-    protected void deleteAll(){repository.deleteAll();};
+    public void deleteAll(){repository.deleteAll();};
 }
