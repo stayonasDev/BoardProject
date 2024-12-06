@@ -11,6 +11,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -51,10 +53,40 @@ public class PostController {
         }
     }
 
-    @GetMapping ("/detail")
-    public String detail(Model model) {
-        model("board", );
-        return null;
+    @GetMapping("/detail/{id}")
+    //@PathVariable 스프링부트 3 부터인가 파라미터 이름을 적어주지 않으면 에러
+    //마찬가지로 @RequestParam 에러
+    public String detail(@PathVariable("id") Long id, Model model) {
+        Post findPost = postService.findById(id);
+        model.addAttribute("post", findPost);
+        return "post/detail";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editPage(@PathVariable("id") Long id, Model model){
+        Post findPost = postService.findById(id);
+
+        PostDto postDto = new PostDto();
+        postDto.setTitle(findPost.getTitle());
+        postDto.setContent(findPost.getContent());
+
+        model.addAttribute("postDto", postDto);
+        return "/post/edit";
+    }
+
+    // 스프링 시큐리티로 User 회원 정보 id 빼오기?
+    //게시판 id로??
+    @PostMapping("/edit/{id}")
+    public String commentEdit(@PathVariable("id") Long id, @Validated @ModelAttribute PostDto postDto
+            , BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addAttribute("id", id);
+        if (bindingResult.hasErrors()) {
+            return "redirect:/post/edit/{id}";
+        }
+
+        return "redirect:/post/edit/{id}";
+
     }
 
     @PostMapping("/delete/{id}")

@@ -12,7 +12,7 @@
 
 <div class="container">
     <div th:each="post : ${posts}">
-        <div th:text="${post.title}"><a th:href="@{post/detail}">제목</a></div>
+        <div><a  th:text="${post.title}" th:href="@{post/detail/{id}(id=${post.id})}">제목</a></div>
         <div th:text="${post.content}">내용</div>
         <div><span th:text="${post.author.username}">작성자</span></div>
         <div><span th:text="${#temporals.format(post.createdAt,  'yyyy-MM-dd')}">작성일</span></div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="contain">
+    <div><a th:text="수정" th:href="@{/post/edit/{id}(id=${post.id})}"></a></div>
+    <div th:text="${post.title}">제목</div>
+    <div th:text="${post.content}">내용</div>
+
+    <div>
+        <div th:text="${post.author.username}">생성자</div>
+        <div th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd')}">날짜</div>
+        <div th:text="${post.viewCount}">조회수</div>
+    </div>
+
+    <!--    댓글 만들기-->
+</div>
+</body>
+</html>

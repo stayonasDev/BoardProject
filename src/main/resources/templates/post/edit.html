@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="contain">
+    <form action="#" th:action th:object="${postDto}" method="post" >
+        <div>
+            <label for="title" th:text="*{title}"></label>
+            <input type="text" id="title"th:field="*{title}"/>
+        </div>
+        <textarea th:field="*{content}"></textarea>
+        <button type="submit" th:text="수정 완료"></button>
+    </form>
+</div>
+</body>
+</html>
