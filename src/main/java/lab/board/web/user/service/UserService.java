@@ -4,6 +4,7 @@ import lab.board.domain.User;
 import lab.board.web.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +16,10 @@ import java.util.Optional;
 public class UserService{
 
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     public User save(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
 

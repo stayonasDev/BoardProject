@@ -9,11 +9,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
@@ -22,24 +29,23 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeRequest) ->
                                 authorizeRequest
                                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                                        .requestMatchers("/", "/user/**", "/user/login/**", "/user/join", "/post/**").permitAll()
-                                .requestMatchers("유저 인가").hasRole(Role.USER.name())
-                                .requestMatchers("관리자 인가").hasRole(Role.ADMIN.name())
+                                        .requestMatchers("/", "/user/**", "/user/login/**", "/user/join", "/post").permitAll()
+                                        .requestMatchers("/post/**").hasRole("USER")
+//                                .requestMatchers("유저 인가").hasRole(Role.USER.name())
+//                                .requestMatchers("관리자 인가").hasRole(Role.ADMIN.name())
                                         .anyRequest().authenticated() //나머지 페이지 인증된 사용자만 접근
+                )
+                .formLogin(form -> form
+                        .loginPage("/user/login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/user/login?error=true")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/user/logout?logout=true")
+                        .permitAll()
                 );
-//                .formLogin(form -> form
-//                        .loginPage("/user/login")
-//                        .defaultSuccessUrl("/", true)
-//                        .failureUrl("/user/login?error=true")
-//                        .usernameParameter("username")
-//                        .passwordParameter("password")
-//                        .permitAll()
-//                )
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessUrl("/user/logout?logout=true")
-//                        .permitAll()
-//                );
 
         return http.build();
     }
