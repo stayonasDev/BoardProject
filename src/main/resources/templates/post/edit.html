@@ -8,11 +8,11 @@
 <div class="contain">
     <form action="#" th:action th:object="${postDto}" method="post" >
         <div>
-            <label for="title" th:text="*{title}"></label>
+            <label for="title" th:text="제목"></label>
             <input type="text" id="title"th:field="*{title}"/>
         </div>
         <textarea th:field="*{content}"></textarea>
-        <button type="submit" th:text="수정 완료"></button>
+        <button type="submit" th:text="|수정 완료|"></button>
     </form>
 </div>
 </body>

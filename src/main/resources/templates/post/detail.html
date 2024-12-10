@@ -12,11 +12,36 @@
 
     <div>
         <div th:text="${post.author.username}">생성자</div>
-        <div th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd')}">날짜</div>
+        <div th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">날짜</div>
         <div th:text="${post.viewCount}">조회수</div>
     </div>
 
     <!--    댓글 만들기-->
+    <h3>댓글</h3>
+    <form action="#" th:action="@{/post/detail/{id}/comment(id=${post.id})}" method="post">
+        <textarea name="content" required></textarea>
+        <button type="submit">댓글 추가</button>
+    </form>
+
+    <div th:each="comment : ${comments}">
+        <div>
+            <div th:text="${comment.content}">댓글 내용</div>
+            <div th:text="${comment.author.username}">작성자</div>
+            <div th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</div>
+
+            <form action="#" th:action="@{/post/comment/{commentId}/delete(commentId=${comment.id})}" method="post">
+                <button type="submit">삭제</button>
+            </form>
+
+<!--            낙관적 락 잠시 보류-->
+<!--            <form action="#" th:action="@{/post/detail/{id}/comment(id=${post.id})}" method="post">
+                <textarea name="content" required placeholder="댓글 작성하기"></textarea>
+                <input  type="hidden" name="parentId" th:value="${comment.id}"/>
+                <button type="submit">추가</button>
+            </form>-->
+
+        </div>
+    </div>
 </div>
 </body>
 </html>

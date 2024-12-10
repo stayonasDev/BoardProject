@@ -1,5 +1,6 @@
 package lab.board.web.user.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lab.board.domain.User;
 import lab.board.web.user.dto.LoginDto;
 import lab.board.web.user.service.UserService;
@@ -61,8 +62,10 @@ public class UserController {
     }
 
     @PostMapping("/join")
-    public String registerUser(@Validated @ModelAttribute User user, BindingResult bindingResult) {
-        log.info("Post Join 접근");
+    public String registerUser(@Validated @ModelAttribute User user, BindingResult bindingResult
+    , HttpServletRequest request) {
+
+        log.info("회원가입 시도 = {}", request.getServerName());
         if (bindingResult.hasErrors()) {
             return "user/join"; // 유효성 검사 실패 시 회원가입 페이지로
         }
